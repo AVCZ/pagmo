@@ -54,25 +54,25 @@ std::string himmelblau::get_name() const
 /// Initialize the Himmelblau's function four local minima.
 void himmelblau::initialize_best(void)
 {
-  const int min_count = 4;
-  const int x_dimension = 2;
+	const int min_count = 4;
+	const int x_dimension = 2;
 
-  const double x_vector[][x_dimension] = {
-    {3.0, 2.0},
-    {-2.805118, 3.131312},
-    {-3.779310, -3.283186},
-    {3.584428, -1.848126}
-  };
+	const double x_vector[][x_dimension] = {
+		{3.0, 2.0},
+		{-2.805118, 3.131312},
+		{-3.779310, -3.283186},
+		{3.584428, -1.848126}
+	};
 
-  std::vector<decision_vector> best_x(min_count);
+	std::vector<decision_vector> best_x(min_count);
 
-  for (int i = 0; i < min_count; ++i) {
-    decision_vector x(x_dimension);
-    std::copy(x_vector[i],x_vector[i] + x_dimension,x.begin());
-    best_x[i] = x;
-  }
+	for (int i = 0; i < min_count; ++i) {
+		decision_vector x(x_dimension);
+		std::copy(x_vector[i],x_vector[i] + x_dimension,x.begin());
+		best_x[i] = x;
+	}
 
-  set_best_x(best_x);
+	set_best_x(best_x);
 }
 
 }}
