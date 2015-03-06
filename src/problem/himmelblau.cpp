@@ -30,7 +30,11 @@
 namespace pagmo { namespace problem {
 
 /// Default constructor.
-himmelblau::himmelblau():base(-6.,6.,2) {}
+himmelblau::himmelblau():base(-6.,6.,2)
+{
+	// initialize best solution
+	initialize_best();
+}
 
 /// Clone method.
 base_ptr himmelblau::clone() const
