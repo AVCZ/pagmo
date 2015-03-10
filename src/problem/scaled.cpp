@@ -54,6 +54,7 @@ scaled::scaled(const base & p, const decision_vector & units):
 	if (units.size() != p.get_f_dimension()) {
 		pagmo_throw(value_error,"The size of the provided units vector does not match the fitness dimension of the provided problem");
 	}
+	transform_best_x(p.get_best_x());
 }
 
 /// Clone method.
@@ -102,6 +103,16 @@ void scaled::compute_constraints_impl(constraint_vector &c, const decision_vecto
 	m_original_problem->compute_constraints(c, x);
 }
 
+/// Compute the optima of the new problem from the original problem with the fitness scaled.
+/*
+ * @param[in] best_x optima of the original problem
+ */
+void scaled::transform_best_x(const std::vector<decision_vector> &best_x)
+{
+	// NOTE:
+	// In case m_units may be negative then we would need to know the maxima of the original problem.
+	// In case m_units may be only positive then the body of this function is correct.
+}
 
 std::string scaled::get_name() const
 {

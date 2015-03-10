@@ -63,6 +63,7 @@ rotated::rotated(const base &p, const Eigen::MatrixXd &rotation ):
 		pagmo_throw(value_error,"Input problem has an integer dimension. Cannot rotate it.");
 	}
 	configure_new_bounds();
+	transform_best_x(p.get_best_x());
 }
 
 /**
@@ -107,6 +108,7 @@ rotated::rotated(const base &p,
 		pagmo_throw(value_error,"The input matrix seems not to be orthonormal (to a tolerance of 1e-5)");
 	}
 	configure_new_bounds();
+	transform_best_x(p.get_best_x());
 }
 
 /**
@@ -138,6 +140,7 @@ rotated::rotated(const base &p):
 		pagmo_throw(value_error,"Input problem has an integer dimension. Cannot rotate it.");
 	}
 	configure_new_bounds();
+	transform_best_x(p.get_best_x());
 }
 
 /// Clone method.
@@ -168,6 +171,38 @@ void rotated::configure_new_bounds()
 	// Expand the box to cover the whole original search space. We may here call directly
 	// the set_bounds(const double &, const double &) as all dimensions are now equal
 	set_bounds(-sqrt(2), sqrt(2));
+}
+
+/// Compute the rotated optima of the new problem from the original problem.
+/*
+ * @param[in] best_x optima of the original problem
+ */
+void rotated::transform_best_x(const std::vector<decision_vector> &best_x)
+{
+	const base::size_type cnt = best_x.size();
+	std::vector<decision_vector> new_best_x = best_x;
+
+	for (base::size_type i = 0; i < cnt; ++i) {
+		// 1. normalize the vector best_x[i]
+		decision_vector x_normed(best_x[i].size());
+		for (base::size_type j = 0; j < best_x[i].size(); ++j) {
+			x_normed[j] = (best_x[i][j] - m_normalize_translation[j]) / m_normalize_scale[j];
+		}
+
+		// 2. rotate the normalized vector 
+		Eigen::VectorXd x_normed_vec = Eigen::VectorXd::Zero(x_normed.size());
+		for (base::size_type j = 0; j < x_normed.size(); ++j) {
+			x_normed_vec(j) = x_normed[j];
+		}
+		Eigen::VectorXd x_rotated_vec = m_Rotate * x_normed_vec;
+
+		// Store the normalized and rotated vector
+		for (base::size_type j = 0; j < best_x[i].size(); ++j) {
+			new_best_x[i][j] = x_rotated_vec(j);
+		}
+	}
+
+	set_best_x(new_best_x);
 }
 
 // Used to normalize the original upper and lower bounds

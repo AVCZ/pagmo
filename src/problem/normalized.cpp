@@ -53,6 +53,7 @@ normalized::normalized(const base & p):
 		 m_normalization_scale(p.get_dimension(),0)
 {
 	configure_new_bounds();
+	transform_best_x(p.get_best_x());
 }
 
 /// Clone method.
@@ -71,6 +72,24 @@ void normalized::configure_new_bounds()
 		m_normalization_scale[i] = spread/2; // Scale to [-1, 1] centered at origin
 	}
 	set_bounds(-1, 1);
+}
+
+/// Compute the normalized optima of the new problem from the original problem.
+/*
+ * @param[in] best_x optima of the original problem
+ */
+void normalized::transform_best_x(const std::vector<decision_vector> &best_x)
+{
+	const base::size_type cnt = best_x.size();
+	std::vector<decision_vector> new_best_x = best_x;
+
+	for (base::size_type i = 0; i < cnt; ++i) {
+		for (base::size_type j = 0; j < best_x[i].size(); ++j) {
+			new_best_x[i][j] = (best_x[i][j] - m_normalization_center[j]) / m_normalization_scale[j];
+		}
+	}
+
+	set_best_x(new_best_x);
 }
 
 /// Returns the de-normalized version of the decision variables
