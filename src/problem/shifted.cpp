@@ -57,7 +57,8 @@ shifted::shifted(const base & p,
 		pagmo_throw(value_error,"The size of the shifting vector must be equal to the problem dimension");
 	}
 	configure_shifted_bounds(m_translation);
-	transform_x(p.get_best_x());
+	std::vector<decision_vector> new_best_x = transform_x(p.get_best_x());
+	set_best_x(new_best_x);
 }
 
 
@@ -83,7 +84,8 @@ shifted::shifted(const base & p,
 		m_translation(decision_vector(p.get_dimension(), t))
 {
 	configure_shifted_bounds(m_translation);
-	transform_x(p.get_best_x());
+	std::vector<decision_vector> new_best_x = transform_x(p.get_best_x());
+	set_best_x(new_best_x);
 }
 
 /**
@@ -109,7 +111,8 @@ shifted::shifted(const base & p):
 		m_translation[i] = (2*((double) rand() / (RAND_MAX))-1) * (p.get_ub()[i]-p.get_lb()[i]);
 	}
 	configure_shifted_bounds(m_translation);
-	transform_x(p.get_best_x());
+	std::vector<decision_vector> new_best_x = transform_x(p.get_best_x());
+	set_best_x(new_best_x);
 }
 
 /// Clone method.
@@ -162,22 +165,23 @@ void shifted::compute_constraints_impl(constraint_vector &c, const decision_vect
 	m_original_problem->compute_constraints(c, x_translated);
 }
 
-/// Compute the shifted optima of the new problem from the original problem.
+/// Compute shifted vectors for the meta-problem from the original problem.
 /*
- * @param[in] best_x optima of the original problem
+ * @param[in] x vectors of the original problem
+ * @param[out] vectors x shifted
  */
-void shifted::transform_x(const std::vector<decision_vector> &best_x)
+std::vector<decision_vector> shifted::transform_x(const std::vector<decision_vector> &x)
 {
-	const base::size_type cnt = best_x.size();
-	std::vector<decision_vector> new_best_x = best_x;
+	const base::size_type cnt = x.size();
+	std::vector<decision_vector> new_x = x;
 
 	for (base::size_type i = 0; i < cnt; ++i) {
-		for (base::size_type j = 0; j < best_x[i].size(); ++j) {
-			new_best_x[i][j] = best_x[i][j] + m_translation[j];
+		for (base::size_type j = 0; j < x[i].size(); ++j) {
+			new_x[i][j] = x[i][j] + m_translation[j];
 		}
 	}
 
-	set_best_x(new_best_x);
+	return new_x;
 }
 
 /**
