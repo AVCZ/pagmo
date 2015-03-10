@@ -130,15 +130,15 @@ int test_optima_transformations()
 	// and every other normalization goes from [-sqrt(2),sqrt(2)]x[-sqrt(2),sqrt(2)] to [-1,1]x[-1,1].
 	const double coef = (1 / 6.) * (1 / sqrt2) * (1 / sqrt2) * (1 / sqrt2);
 
-	const std::vector<decision_vector> expected_shrinked_minima = {
+	const std::vector<decision_vector> expected_shrunk_minima = {
 		{best_x[0][0] * coef, best_x[0][1] * coef},
 		{best_x[1][0] * coef, best_x[1][1] * coef},
 		{best_x[2][0] * coef, best_x[2][1] * coef},
 		{best_x[3][0] * coef, best_x[3][1] * coef},
 	};
 
-	for (unsigned int i = 0; i < expected_shrinked_minima.size(); ++i) {
-		if (!is_eq(expected_shrinked_minima[i], rot4_best_x[i])) return 1;
+	for (unsigned int i = 0; i < expected_shrunk_minima.size(); ++i) {
+		if (!is_eq(expected_shrunk_minima[i], rot4_best_x[i])) return 1;
 	}
 	// -------------------------------------------------------------
 

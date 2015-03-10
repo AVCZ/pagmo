@@ -70,7 +70,7 @@ class __PAGMO_VISIBLE base_meta : public base
 	private:
 		// Computing new optima from the optima of the original problem.
 		// Applicable to only some transformations.
-		virtual void transform_best_x(const std::vector<decision_vector> &) {}
+		virtual void transform_x(const std::vector<decision_vector> &) {}
 
 		friend class boost::serialization::access;
 		template <class Archive>

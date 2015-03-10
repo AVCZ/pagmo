@@ -58,7 +58,7 @@ class __PAGMO_VISIBLE normalized : public base_meta
 		void compute_constraints_impl(constraint_vector &, const decision_vector &) const;
 	private:
 		void configure_new_bounds();
-		void transform_best_x(const std::vector<decision_vector> &);
+		void transform_x(const std::vector<decision_vector> &);
 	
 		friend class boost::serialization::access;
 		template <class Archive>

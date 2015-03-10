@@ -53,7 +53,7 @@ normalized::normalized(const base & p):
 		 m_normalization_scale(p.get_dimension(),0)
 {
 	configure_new_bounds();
-	transform_best_x(p.get_best_x());
+	transform_x(p.get_best_x());
 }
 
 /// Clone method.
@@ -78,7 +78,7 @@ void normalized::configure_new_bounds()
 /*
  * @param[in] best_x optima of the original problem
  */
-void normalized::transform_best_x(const std::vector<decision_vector> &best_x)
+void normalized::transform_x(const std::vector<decision_vector> &best_x)
 {
 	const base::size_type cnt = best_x.size();
 	std::vector<decision_vector> new_best_x = best_x;

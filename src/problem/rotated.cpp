@@ -63,7 +63,7 @@ rotated::rotated(const base &p, const Eigen::MatrixXd &rotation ):
 		pagmo_throw(value_error,"Input problem has an integer dimension. Cannot rotate it.");
 	}
 	configure_new_bounds();
-	transform_best_x(p.get_best_x());
+	transform_x(p.get_best_x());
 }
 
 /**
@@ -108,7 +108,7 @@ rotated::rotated(const base &p,
 		pagmo_throw(value_error,"The input matrix seems not to be orthonormal (to a tolerance of 1e-5)");
 	}
 	configure_new_bounds();
-	transform_best_x(p.get_best_x());
+	transform_x(p.get_best_x());
 }
 
 /**
@@ -140,7 +140,7 @@ rotated::rotated(const base &p):
 		pagmo_throw(value_error,"Input problem has an integer dimension. Cannot rotate it.");
 	}
 	configure_new_bounds();
-	transform_best_x(p.get_best_x());
+	transform_x(p.get_best_x());
 }
 
 /// Clone method.
@@ -177,7 +177,7 @@ void rotated::configure_new_bounds()
 /*
  * @param[in] best_x optima of the original problem
  */
-void rotated::transform_best_x(const std::vector<decision_vector> &best_x)
+void rotated::transform_x(const std::vector<decision_vector> &best_x)
 {
 	const base::size_type cnt = best_x.size();
 	std::vector<decision_vector> new_best_x = best_x;
