@@ -60,9 +60,9 @@ const std::vector<decision_vector> best_x = {
 int test_shifted()
 {
 	problem::himmelblau prob;
-	problem::shifted shifted_prob(prob, {100,50});
+	problem::shifted nonzero_shifted_prob(prob, {100,50});
 	// retrieve the shifted minima
-	const std::vector<decision_vector> shifted_minima = shifted_prob.get_best_x();
+	const std::vector<decision_vector> shifted_minima = nonzero_shifted_prob.get_best_x();
 
 	// just check that we have actualy moved (somewhere)
 	bool all_equal = true;
@@ -117,8 +117,8 @@ int test_shifted()
 	}
 
 	// Now check that we have actually returned to the origin back again.
-	for (unsigned int i = 0; i < problems.size(); ++i) {
-		if (!is_eq(expected_shifted_minima[0][i],expected_shifted_minima.back()[i])) return 1;
+	for (unsigned int i = 0; i < best_x.size(); ++i) {
+		if (!is_eq(best_x[i],expected_shifted_minima.back()[i])) return 1;
 	}
 
 	return 0;

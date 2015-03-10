@@ -180,22 +180,22 @@ int main()
 					   std::cout << " fitness passes, ";
 					}
 					else{
-						std::cout << " fitness failed!"<<std::endl;
+						std::cout << " fitness failed!" << std::endl;
 						return 1;
 					}
 				}
 				if(best_tests[i].best_c.empty() && best_tests[i].problem->get_c_dimension()>0) {
 					std::cout << "Best constraint vector is not implemented." << std::endl;
 				}
-				else {
+				else if (!best_tests[i].best_c.empty()) {
 					const constraint_vector &best_c = best_tests[i].best_c.at(j);
 					constraint_vector best_c_computed = best_tests[i].problem->get_best_c().at(j);
 
 					if(is_eq(best_c_computed, best_c, EPS)){
-						std::cout << " constraints passes.";
+						std::cout << " constraints passes." << std::endl;
 					}
 					else{
-						std::cout << " constraints failed!"<<std::endl;
+						std::cout << " constraints failed!" << std::endl;
 						return 1;
 					}
 				}
@@ -203,7 +203,6 @@ int main()
 		}
 	}
 
-	std::cout << std::endl;
 	return 0;
 }
 
