@@ -107,7 +107,7 @@ void scaled::compute_constraints_impl(constraint_vector &c, const decision_vecto
  * @param[in] x vectors of the original problem
  * @param[out] vectors of the scaled problem
  */
-std::vector<decision_vector> scaled::transform_x(const std::vector<decision_vector> &x)
+std::vector<decision_vector> scaled::transform_x(const std::vector<decision_vector> &x) const
 {
 	// Only the fitness is scaled, not the space itself.
 	return x;

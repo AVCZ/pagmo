@@ -170,7 +170,7 @@ void shifted::compute_constraints_impl(constraint_vector &c, const decision_vect
  * @param[in] x vectors of the original problem
  * @param[out] vectors x shifted
  */
-std::vector<decision_vector> shifted::transform_x(const std::vector<decision_vector> &x)
+std::vector<decision_vector> shifted::transform_x(const std::vector<decision_vector> &x) const
 {
 	const base::size_type cnt = x.size();
 	std::vector<decision_vector> new_x = x;

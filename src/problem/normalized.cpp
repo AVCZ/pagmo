@@ -80,7 +80,7 @@ void normalized::configure_new_bounds()
  * @param[in] x vectors of the original problem
  * @param[out] vectors x normalized
  */
-std::vector<decision_vector> normalized::transform_x(const std::vector<decision_vector> &x)
+std::vector<decision_vector> normalized::transform_x(const std::vector<decision_vector> &x) const
 {
 	const base::size_type cnt = x.size();
 	std::vector<decision_vector> new_x = x;
