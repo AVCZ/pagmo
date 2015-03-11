@@ -22,66 +22,34 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.               *
  *****************************************************************************/
 
-#include <string>
+// Test for getters and setters
 
-#include "algorithm/base.h"
-#include "base_island.h"
-#include "island.h"
-#include "migration/base_r_policy.h"
-#include "migration/base_s_policy.h"
-#include "population.h"
-#include "problem/base.h"
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+#include <vector>
+#include <cassert>
+#include "../src/pagmo.h"
 
-namespace pagmo
-{
+using namespace pagmo;
 
-/// Constructor from problem::base, algorithm::base, number of individuals, migration probability and selection/replacement policies.
-/**
- * @see pagmo::base_island constructors.
- */
-island::island(const algorithm::base &a, const problem::base &p, int n,
-	const migration::base_s_policy &s_policy, const migration::base_r_policy &r_policy):
-	base_island(a,p,n,s_policy,r_policy)
-{}
+int test_distribution_type() {
+	std::vector<archipelago::distribution_type> types = {
+		archipelago::distribution_type::point_to_point,
+		archipelago::distribution_type::broadcast,
+	};
+	archipelago a;
 
-/// Copy constructor.
-/**
- * @see pagmo::base_island constructors.
- */
-island::island(const island &isl):base_island(isl)
-{}
+	for(auto it = types.begin(); it != types.end(); ++it) {
+		a.set_distribution_type(*it);
+		if(a.get_distribution_type() != *it) {
+			return 1;
+		}
+	}
 
-/// Constructor from population.
-/**
- * @see pagmo::base_island constructors.
- */
-island::island(const algorithm::base &a, const population &pop,
-	const migration::base_s_policy &s_policy, const migration::base_r_policy &r_policy):
-	base_island(a,pop,s_policy,r_policy)
-{}
-
-/// Assignment operator.
-island &island::operator=(const island &isl)
-{
-	base_island::operator=(isl);
-	return *this;
+	return 0;
 }
 
-base_island_ptr island::clone() const
-{
-	return base_island_ptr(new island(*this));
+int main() {
+	return test_distribution_type();
 }
-
-void island::perform_evolution(const algorithm::base &algo, population &pop) const
-{
-	algo.evolve(pop);
-}
-
-std::string island::get_name() const
-{
-	return "Local thread island";
-}
-
-}
-
-BOOST_CLASS_EXPORT_IMPLEMENT(pagmo::island)

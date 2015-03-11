@@ -136,8 +136,10 @@ class __PAGMO_VISIBLE archipelago
 		bool check_island(const base_island &) const;
 		topology::base_ptr get_topology() const;
 		void set_topology(const topology::base &);
+		distribution_type get_distribution_type() const;
+		void set_distribution_type(const distribution_type &);
 		void evolve(int = 1);
-		void evolve_batch(int, unsigned int);
+		void evolve_batch(int, unsigned int, bool = true);
 		void evolve_t(int);
 		bool busy() const;
 		void interrupt();

@@ -54,6 +54,14 @@ ADD_EXECUTABLE(test_optima_transformations test_optima_transformations.cpp)
 TARGET_LINK_LIBRARIES(test_optima_transformations ${MANDATORY_LIBRARIES} pagmo_static)
 ADD_TEST(test_optima_transformations test_optima_transformations)
 
+ADD_EXECUTABLE(test_archipelago test_archipelago.cpp)
+TARGET_LINK_LIBRARIES(test_archipelago ${MANDATORY_LIBRARIES} pagmo_static)
+ADD_TEST(test_archipelago test_archipelago)
+
+ADD_EXECUTABLE(test_decompose test_decompose.cpp)
+TARGET_LINK_LIBRARIES(test_decompose ${MANDATORY_LIBRARIES} pagmo_static)
+ADD_TEST(test_decompose test_decompose)
+
 IF(ENABLE_MPI)
 	ADD_EXECUTABLE(mpi_torture_test mpi_torture_test.cpp)
         TARGET_LINK_LIBRARIES(mpi_torture_test ${MANDATORY_LIBRARIES} pagmo_static)
